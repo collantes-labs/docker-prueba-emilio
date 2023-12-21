@@ -1,15 +1,21 @@
 version: '3.9'
 
+networks:
+  app-network:
+    driver: bridge
+
 volumes:
   db_mysql: {}
 
 services:
   db:
     image: mysql
-    env_file: ./.env
-    restart: always
+    networks:
+      - app-network
     ports:
       - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    env_file: ./.env
+    restart: always
     volumes:
       - db_mysql:/var/lib/mysql
     environment:
