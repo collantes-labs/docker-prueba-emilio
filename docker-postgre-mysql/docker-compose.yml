@@ -1,12 +1,22 @@
 version: '3.9'
 
+networks:
+  data-network:
+    driver: bridge
+
 volumes:
   mysql_data: {} 
   postgres_data: {}
 
 services:
   mysql:
-    image: mysql
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    networks:
+      - data-network
+    expose:
+      - $MYSQL_DOCKER_PORT
     env_file: ./.env
     restart: always
     ports:
@@ -18,7 +28,13 @@ services:
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
 
   postgres:  
-    image: postgres
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    networks:
+      - data-network
+    expose:
+      - $POSTGRES_DOCKER_PORT
     env_file: ./.env
     ports:
       - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT

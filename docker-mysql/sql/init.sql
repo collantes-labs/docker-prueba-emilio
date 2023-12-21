@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON mysqldb.* TO 'emiliouser'@'%';
+FLUSH PRIVILEGES;

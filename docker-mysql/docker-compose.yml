@@ -9,9 +9,13 @@ volumes:
 
 services:
   db:
-    image: mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
     networks:
       - app-network
+    expose:
+      - $MYSQL_DOCKER_PORT
     ports:
       - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
     env_file: ./.env
