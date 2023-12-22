@@ -9,9 +9,7 @@ volumes:
 
 services:
   db:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: mysql:8.0
     networks:
       - app-network
     expose:
@@ -22,6 +20,7 @@ services:
     restart: always
     volumes:
       - db_mysql:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - MYSQL_DATABASE=$MYSQLDB_DATABASE

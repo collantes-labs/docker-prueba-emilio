@@ -9,9 +9,7 @@ volumes:
 
 services:
   db:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: postgres:16-alpine3.18
     networks:
       - app-network
     expose:
@@ -21,6 +19,7 @@ services:
       - $POSTGRES_LOCAL_PORT:$POSTGRES_DOCKER_PORT
     volumes:
       - db-postgre:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/
     environment:
       - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
       - POSTGRES_DB=$POSTGRESDB_DATABASE
